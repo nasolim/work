@@ -1,6 +1,6 @@
 # developer: Milo Sanu
 # date: 2016-01-08
-# version: 1
+# version: 1.1
 # description: Create a new directory and moves all
 # client faxes to a new directory.
 
@@ -12,6 +12,8 @@ import csv
 import functools
 
 
+os.system('grep %s file_name.txt >> new_file_name.txt')
+
 def dir_creator(dir_name):
 	"""Create a new directory""" 
 	s.call(["mkdir",dir_name])
@@ -19,16 +21,26 @@ def dir_creator(dir_name):
 	print "\nDirectory Created: %s \n" % (dir_name)
 	return dir_name
 	
+def grep_search(item):
+	system('grep %s my_temp_list.txt >> my_refined_temp_list.txt') % item
+
 
 def mv_files(search_term,direc_name):
 	"""Move files to name directory using terminal command line."""
 	print "Preparing to send files to %s" % (direc_name)
-	system('mv *_%s* %s' % (search_term,direc_name)) 
+	#i want to create a text file containing a list of all the files in the directory.
+	system('ls >> my_temp_list.txt')
+	#i want to search through my new txt file and find the file names for those items in my search list
+	map(grep_search,search_term)
+	path = getcwd()
+	refined_list = search_list(path,'my_refined_temp_list.txt')
+	s = lambda x: system('mv %s %s' % (x,direc_name))
+	map(functools.partial(s, direc_name = direc_name), refined_list)
 	print "File Transfer Complete"
 
-def search_list(f_path,file_name):
+def search_list(file_path,file_name):
 	print "searching..."
-	f = open(path.join(f_path,file_name))
+	f = open(path.join(file_path,file_name))
 	csvreader = csv.reader(f)
 	#reader is a list of lists, row[0] ensures you are grabbing only text
 	repo = [row[0] for row in csvreader]
@@ -53,7 +65,7 @@ def main():
         ids = search_list(f_path, file_name)
         #map files names through move process
         print "Sending files to: %s" % dir_name
-        map(functools.partial(mv_files, direc_name = dir_name), ids)
+        mv_files(ids,dir_name)
         new_count = file_count()
         path = getcwd() + "/" + dir_name
         chdir(path)
