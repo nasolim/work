@@ -11,9 +11,6 @@ from commands import getstatusoutput as gso
 import csv
 import functools
 
-
-os.system('grep %s file_name.txt >> new_file_name.txt')
-
 def dir_creator(dir_name):
 	"""Create a new directory""" 
 	s.call(["mkdir",dir_name])
@@ -21,9 +18,6 @@ def dir_creator(dir_name):
 	print "\nDirectory Created: %s \n" % (dir_name)
 	return dir_name
 	
-def grep_search(item):
-	system('grep %s my_temp_list.txt >> my_refined_temp_list.txt') % item
-
 
 def mv_files(search_term,direc_name):
 	"""Move files to name directory using terminal command line."""
@@ -31,7 +25,8 @@ def mv_files(search_term,direc_name):
 	#i want to create a text file containing a list of all the files in the directory.
 	system('ls >> my_temp_list.txt')
 	#i want to search through my new txt file and find the file names for those items in my search list
-	map(grep_search,search_term)
+	a = lambda x: system('grep %s my_temp_list.txt >> my_refined_temp_list.txt') % x
+	map(a,search_term)
 	path = getcwd()
 	refined_list = search_list(path,'my_refined_temp_list.txt')
 	s = lambda x: system('mv %s %s' % (x,direc_name))
