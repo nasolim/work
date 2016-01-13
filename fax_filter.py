@@ -35,7 +35,7 @@ def mv_files(search_term,direc_name):
 	print "File Transfer Complete"
 
 def search_list(file_path,file_name):
-	print "searching..."
+	print "\nsearching..."
 	f = open(path.join(file_path,file_name))
 	csvreader = csv.reader(f)
 	#reader is a list of lists, row[0] ensures you are grabbing only text
@@ -50,14 +50,16 @@ def file_count():
 	return count
 
 def main():
-	dir_name = str(raw_input("New Directory Name?\n>   "))
+	working_path = str(raw_input("Directory path to files that need to be filtered?\n>	"))
+	chdir(working_path) 
+	dir_name = str(raw_input("Directory Name for filtered files?\n>   "))
 	#create your new directory
 	dir_creator(dir_name)
 	#determine total number of files to be scanned
 	total_count = file_count()
 	#provide search term list and it's location
-	f_path = str(raw_input("What is the path to your list file?\n>"))
-	file_name = str(raw_input("\nWhat is the name and ext of your file?\n>"))
+	f_path = str(raw_input("Path to your list file?\n>"))
+	file_name = str(raw_input("\nWhat is the name and ext of your file?\n>	"))
 	ids = search_list(f_path, file_name)
 	#map files names through move process
 	print "Sending files to: %s" % dir_name
