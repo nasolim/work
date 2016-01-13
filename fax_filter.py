@@ -75,4 +75,4 @@ Total Files In New Directory: %s
 ''' % (total_count, new_count, new_dir_count)
 
 
-main()
+print main()
