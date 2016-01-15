@@ -51,7 +51,7 @@ def file_count():
 
 
 def main():
-    working_path = str(raw_input("Directory path to files that need to be filtered?\n>	"))
+    working_path = str(raw_input("Provide absolute path to the files that need to be filtered?\n>	"))
     chdir(working_path)
     dir_name = str(raw_input("Directory Name for filtered files?\n>   "))
     # create your new directory
@@ -59,8 +59,8 @@ def main():
     # determine total number of files to be scanned
     total_count = file_count()
     # provide search term list and it's location
-    f_path = str(raw_input("Path to your list file?\n>"))
     file_name = str(raw_input("\nWhat is the name and ext of your file?\n>	"))
+    f_path = str(raw_input("Provide absolute path to your search list?\n>"))
     ids = search_list(f_path, file_name)
     # map files names through move process
     print "Sending files to: %s" % dir_name
